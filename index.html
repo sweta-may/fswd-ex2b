@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Used Products Classifieds</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 20px;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        .search {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search input {
+            width: 60%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: white;
+            width: 250px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px gray;
+        }
+
+        .card h3 {
+            margin-top: 5px;
+        }
+
+        .price {
+            color: green;
+            font-weight: bold;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .sell-form {
+            background-color: white;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 10px;
+        }
+
+        .sell-form input,
+        .sell-form select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>UsedMart</h1>
+        <p>Buy and Sell Used Products</p>
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#products">Products</a>
+        <a href="#sell">Sell Product</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- Search -->
+        <div class="search">
+            <input type="text"
+                   id="searchBox"
+                   placeholder="Search products..."
+                   onkeyup="searchProducts()">
+        </div>
+
+        <!-- Products -->
+        <h2 id="products">Available Products</h2>
+
+        <div class="products" id="productList">
+
+            <div class="card">
+                <h3>Used Laptop</h3>
+                <p>HP Laptop, 8GB RAM, 256GB SSD</p>
+                <p class="price">₹25,000</p>
+                <button onclick="buyProduct('Used Laptop')">
+                    Contact Seller
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Smartphone</h3>
+                <p>Samsung Galaxy, 128GB Storage</p>
+                <p class="price">₹12,000</p>
+                <button onclick="buyProduct('Smartphone')">
+                    Contact Seller
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Study Table</h3>
+                <p>Wooden study table in good condition</p>
+                <p class="price">₹3,000</p>
+                <button onclick="buyProduct('Study Table')">
+                    Contact Seller
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Bicycle</h3>
+                <p>Mountain bicycle, lightly used</p>
+                <p class="price">₹6,000</p>
+                <button onclick="buyProduct('Bicycle')">
+                    Contact Seller
+                </button>
+            </div>
+
+        </div>
+
+
+        <!-- Sell Product -->
+        <div class="sell-form" id="sell">
+
+            <h2>Sell Your Product</h2>
+
+            <form onsubmit="addProduct(event)">
+
+                <label>Product Name:</label>
+                <input type="text"
+                       id="productName"
+                       required>
+
+                <label>Description:</label>
+                <input type="text"
+                       id="description"
+                       required>
+
+                <label>Price:</label>
+                <input type="number"
+                       id="price"
+                       required>
+
+                <label>Category:</label>
+                <select id="category">
+                    <option>Electronics</option>
+                    <option>Furniture</option>
+                    <option>Vehicles</option>
+                    <option>Books</option>
+                    <option>Others</option>
+                </select>
+
+                <br><br>
+
+                <button type="submit">
+                    Post Advertisement
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 UsedMart - Buy & Sell Used Products</p>
+    </footer>
+
+
+    <script>
+
+        // Search products
+        function searchProducts() {
+
+            let input =
+                document.getElementById("searchBox")
+                .value.toLowerCase();
+
+            let cards =
+                document.querySelectorAll(".card");
+
+            cards.forEach(function(card) {
+
+                let text =
+                    card.innerText.toLowerCase();
+
+                if (text.includes(input)) {
+                    card.style.display = "block";
+                }
+                else {
+                    card.style.display = "none";
+                }
+
+            });
+        }
+
+
+        // Add new product
+        function addProduct(event) {
+
+            event.preventDefault();
+
+            let name =
+                document.getElementById("productName").value;
+
+            let description =
+                document.getElementById("description").value;
+
+            let price =
+                document.getElementById("price").value;
+
+            let productList =
+                document.getElementById("productList");
+
+            let card =
+                document.createElement("div");
+
+            card.className = "card";
+
+            card.innerHTML = `
+                <h3>${name}</h3>
+                <p>${description}</p>
+                <p class="price">₹${price}</p>
+                <button onclick="buyProduct('${name}')">
+                    Contact Seller
+                </button>
+            `;
+
+            productList.appendChild(card);
+
+            alert("Product posted successfully!");
+
+            document.querySelector("form").reset();
+        }
+
+
+        // Contact seller
+        function buyProduct(product) {
+
+            alert(
+                "You selected " + product +
+                ". Seller will contact you soon."
+            );
+        }
+
+    </script>
+
+</body>
+</html>
